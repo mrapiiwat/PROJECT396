@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -121,6 +122,7 @@ const Register = () => {
               >
                 Login
               </button>
+              <Link className="flex justify-center text-indigo-600 mt-2 hover:underline" to={'/'}>Back to Login</Link>
             </form>
           </div>
         </div>
