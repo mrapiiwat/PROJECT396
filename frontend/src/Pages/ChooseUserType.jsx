@@ -1,9 +1,32 @@
-import React from 'react'
+import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const ChooseUserType = () => {
+const HomePage = () => {
+  const navigate = useNavigate()
+  const handleClick = (role) => {
+    alert(`คุณเลือก: ${role}`);
+    if(role == 'ผู้โดยสาร' ) {
+      navigate('/registerpass')
+    }else if (role == 'คนขับ' ) {
+      navigate('/registerdriver')}
+  };
+
   return (
-    <div>ChooseUserType</div>
-  )
-}
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div
+        className="bg-white text-center p-6 m-4 w-48 rounded-lg shadow-lg hover:bg-primary hover:text-white cursor-pointer"
+        onClick={() => handleClick('ผู้โดยสาร')}
+      >
+        ผู้โดยสาร
+      </div>
+      <div
+        className="bg-white text-center p-6 m-4 w-48 rounded-lg shadow-lg hover:bg-secondary hover:text-white cursor-pointer"
+        onClick={() => handleClick('คนขับ')}
+      >
+        คนขับ
+      </div>
+    </div>
+  );
+};
 
-export default ChooseUserType
+export default HomePage;
