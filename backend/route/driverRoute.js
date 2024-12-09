@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   try {
     const drivers = await pool.query("SELECT * FROM driver");
     if (drivers.rows.length === 0) {
-      return res.json("No drivers available");
+      return res.json("NO DRIVERS AVAILABLE");
     }
     res.json(drivers.rows);
   } catch (err) {
