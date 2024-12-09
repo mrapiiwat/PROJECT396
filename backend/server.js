@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const driverRoute = require("./route/driverRoute");
+const passengerRoute = require("./route/passengerRoute");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/driver' , driverRoute)
+app.use('/passenger' , passengerRoute)
 
 PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
