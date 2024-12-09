@@ -1,0 +1,19 @@
+### TEST DRIVER API
+GET http://localhost:5000/vehicle
+
+###
+POST http://localhost:5000/vehicle
+Content-Type: application/json
+
+{
+  "vehicle_type": "Taxi",
+  "model": "Susuki",
+  "license_plate": "hello123",
+  "driverid": 7
+}
+
+###
+PUT http://localhost:5000/vehicle/4
+
+###
+DELETE http://localhost:5000/vehicle/5
