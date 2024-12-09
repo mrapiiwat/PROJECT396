@@ -62,12 +62,7 @@ const PassengerRegister = () => {
         >
           สมัคร
         </button>
-        <a onClick={() => navigate("/")}
-      
-          className="w-full bg-passenger text-white py-2 rounded-lg mt-2 hover:bg-passenger-hover"
-        >
-          ย้อนกลับ
-        </a>
+       
       </form>
       
     </div>

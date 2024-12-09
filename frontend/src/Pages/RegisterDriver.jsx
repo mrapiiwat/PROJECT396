@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
     phone_number: '',
     driving_license: '',
     license_plate: '',
+    model: '',
     cartype: ''
     });
   
@@ -34,7 +35,6 @@ import { useNavigate } from 'react-router-dom';
               value={formData.lname}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
-              
             />
           </div>
           <div className="mb-4">
@@ -45,7 +45,6 @@ import { useNavigate } from 'react-router-dom';
               value={formData.fname}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
-             
             />
           </div>
           <div className="mb-4">
@@ -56,7 +55,6 @@ import { useNavigate } from 'react-router-dom';
               value={formData.phone_number}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
-              
             />
           </div>
           <div className="mb-4">
@@ -67,7 +65,6 @@ import { useNavigate } from 'react-router-dom';
               value={formData.driving_license}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
-           
             />
           </div>
           <div className="mb-4">
@@ -76,6 +73,17 @@ import { useNavigate } from 'react-router-dom';
               type="text"
               name="license_plate"
               value={formData.license_plate}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
+              
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium">ยี่ห้อ/รุ่นรถ</label>
+            <input
+              type="text"
+              name="model"
+              value={formData.model}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-driver"
               
@@ -101,16 +109,10 @@ import { useNavigate } from 'react-router-dom';
             className="w-full bg-driver text-white py-2 rounded-lg hover:bg-driver-hover"
           >
             สมัคร
-          </button>
-          <button onClick={() => navigate("/")}
-           
-            className="w-full bg-driver text-white py-2 rounded-lg  mt-2 hover:bg-driver-hover" 
-          >
-            ย้อนกลับ
-          </button>
+          </button> 
         </form>
       </div>
     );
-  };
+};
   
-  export default DriverRegister;
+export default DriverRegister;
