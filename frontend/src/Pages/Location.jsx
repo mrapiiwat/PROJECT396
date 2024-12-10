@@ -45,7 +45,11 @@ const Location = () => {
 
       {/* Google Map */}
       <LoadScript googleMapsApiKey="AIzaSyBzP7EDnFTiON-eN2IsAn_mPrzU1CnuplE">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12} />
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={12}
+        />
       </LoadScript>
 
       {/* Form สำหรับต้นทางและปลายทาง */}
