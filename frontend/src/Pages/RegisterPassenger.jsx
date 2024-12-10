@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const PassengerRegister = () => {
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,9 +28,10 @@ const PassengerRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      await axios.post('http://localhost:5000/passenger',formData);
-    }catch(err){console.log(err);
+    try {
+      await axios.post("http://localhost:5000/passenger", formData);
+    } catch (err) {
+      console.log(err);
     }
     alert(
       `สมัครเรียบร้อยสำหรับผู้โดยสาร:\nข้อมูล: ${JSON.stringify(
