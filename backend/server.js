@@ -17,10 +17,9 @@ app.use('/ride' ,require('./route/rideRoute'));
 app.use('/rideconfirm' , require('./route/rideConfrimRoute'));
 app.use('/discount' , require('./route/discountRoute'));
 app.use('/ridehistory' , require('./route/rideHistoryRoute'));
-//404 page
 app.use((req, res) => {
   res.status(404).send("404 - Page Not Found");
-});
+}); // 404 page
 
 PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
