@@ -6,11 +6,11 @@ POST http://localhost:5000/driver
 Content-Type: application/json
 
 {
-  "fname": "Apiwat",
-  "lname": "Lantong",
-  "phone_number": "0886651690",
-  "driving_license": "A752698"
+  "fname": "Tam",
+  "lname": "Tam",
+  "phone_number": "123",
+  "driving_license": "A7526988"
 }
 
 ###
-DELETE http://localhost:5000/driver/65
+DELETE http://localhost:5000/driver/68

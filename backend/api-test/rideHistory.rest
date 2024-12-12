@@ -1,0 +1,26 @@
+### TEST RIDE-HISTORY API
+GET http://localhost:5000/ridehistory
+
+###
+POST http://localhost:5000/ridehistory
+Content-Type: application/json
+
+{
+  "rideid": 17,
+  "date_time": "2024-12-12 22:38:00",
+  "pickup_location": "Tha-it",
+  "dropoff_location": "THE MALL",
+  "distance": 10,
+  "price": 300,
+  "ride_status": "COMPLETED",
+  "ride_rating": 5,
+  "review": "GOOD",
+  "tip": 50,
+  "discount_use": null
+}
+
+###
+DELETE http://localhost:5000/ridehistory/6
+
+###
+GET http://localhost:5000/ridehistory/kea

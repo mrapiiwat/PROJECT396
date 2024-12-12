@@ -1,8 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const driverRoute = require("./route/driverRoute");
-const passengerRoute = require("./route/passengerRoute");
-const vehicleRoute = require("./route/vehicleRoute");
 
 const app = express();
 
@@ -13,9 +10,17 @@ app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-app.use('/driver' , driverRoute)
-app.use('/passenger' , passengerRoute)
-app.use('/vehicle' , vehicleRoute)
+app.use('/driver' , require('./route/driverRoute'))
+app.use('/passenger' , require('./route/passengerRoute'))
+app.use('/vehicle' , require('./route/vehicleRoute')) 
+app.use('/ride' ,require('./route/rideRoute'));
+app.use('/rideconfirm' , require('./route/rideConfrimRoute'));
+app.use('/discount' , require('./route/discountRoute'));
+app.use('/ridehistory' , require('./route/rideHistoryRoute'));
+//404 page
+app.use((req, res) => {
+  res.status(404).send("404 - Page Not Found");
+});
 
 PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
