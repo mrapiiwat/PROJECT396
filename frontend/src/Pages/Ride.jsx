@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import ride from "../../public/ride.png";
+import axios from "axios";
+import {  useNavigate } from "react-router-dom";
 
 const Ride = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [userID , setUserID] = useState();
   const [isUsernameConfirmed, setIsUsernameConfirmed] = useState(false);
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -17,38 +21,56 @@ const Ride = () => {
 
   const paymentMethods = ["เงินสด", "บัตรเครดิต", "พร้อมเพย์"];
 
-  const handleConfirmUsername = () => {
-    if (username.trim() === "") {
-      alert("กรุณากรอกชื่อผู้ใช้ก่อน!");
-    } else {
+  const handleConfirmUsername = async() => {
+    try {
+      const checkUser = await axios.get(`http://localhost:5000/passenger/${username}`);
+      if (checkUser.data.length === 0) {
+        alert("ไม่พบชื่อผู้ใช้ในระบบ");
+        return;
+      }
+      setUserID(checkUser.data[0].passengerid);
       setIsUsernameConfirmed(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleConfirm = () => {
-    if (!origin.trim()) {
-      alert("กรุณากรอกสถานที่ต้นทาง!");
-      return;
+  const handleConfirm = async() => {
+    try {
+      if (!origin.trim()) {
+        alert("กรุณากรอกสถานที่ต้นทาง!");
+        return;
+      }
+      if (!destination.trim()) {
+        alert("กรุณากรอกสถานที่ปลายทาง!");
+        return;
+      }
+      if (!selectedCarBrand) {
+        alert("กรุณาเลือกประเภทรถก่อนยืนยัน");
+        return;
+      }
+      if (!paymentMethod) {
+        alert("กรุณาเลือกวิธีการจ่ายเงินก่อนยืนยัน");
+        return;
+      }
+      alert(
+        `ชื่อผู้ใช้: ${username}\nต้นทาง: ${origin}\nปลายทาง: ${destination}\nคุณได้เลือกประเภทรถ: ${selectedCarBrand}\nวิธีจ่ายเงิน: ${paymentMethod}`
+      );
+      const response = await axios.post("http://localhost:5000/ride", {
+        passengerid: userID,
+        driverid: null,
+        pickup_location: origin,
+        dropoff_location: destination,
+        price: 0,
+      });
+    } catch (error) {
+      console.error(error);
     }
-    if (!destination.trim()) {
-      alert("กรุณากรอกสถานที่ปลายทาง!");
-      return;
-    }
-    if (!selectedCarBrand) {
-      alert("กรุณาเลือกประเภทรถก่อนยืนยัน");
-      return;
-    }
-    if (!paymentMethod) {
-      alert("กรุณาเลือกวิธีการจ่ายเงินก่อนยืนยัน");
-      return;
-    }
-    alert(
-      `ชื่อผู้ใช้: ${username}\nต้นทาง: ${origin}\nปลายทาง: ${destination}\nคุณได้เลือกประเภทรถ: ${selectedCarBrand}\nวิธีจ่ายเงิน: ${paymentMethod}`
-    );
   };
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
+      <div className="absolute top-2 left-2 z-10"><img onClick={()=>navigate('/history')} className="w-10 h-10 object-cover" src="https://w7.pngwing.com/pngs/923/257/png-transparent-burger-with-patty-tomato-and-lettuce-whopper-hamburger-chicken-sandwich-big-king-burger-king-premium-burgers-hamburger-menu-food-recipe-cheeseburger-thumbnail.png"/></div>
       {/* รูปภาพที่เกี่ยวกับการเดินทาง */}
       <div className="relative w-full h-45 bg-gray-200">
         <img
@@ -164,7 +186,7 @@ const Ride = () => {
         <div className="bg-white p-4">
           <button
             onClick={handleConfirm}
-            className="w-3/4 bg-green-500 text-white px-4 py-2 rounded-md font-bold mx-auto block"
+            className="w-[200px] bg-green-500 text-white px-4 py-2 rounded-md font-bold mx-auto block"
           >
             ยืนยัน
           </button>

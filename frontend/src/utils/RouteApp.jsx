@@ -16,8 +16,6 @@ const RouteApp = () => {
         <Route path="/registerdriver" element={<RegisterDriver />} />
         <Route path="/registerpass" element={<RegisterPassenger />} />
         <Route path="/ride" element={<Ride/>} />
-      
-
         <Route path="/history" element={<RideHistory />} />
       </Routes>
     </Router>

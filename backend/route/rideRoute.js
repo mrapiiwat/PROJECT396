@@ -16,22 +16,27 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { passengerid, driverid, pickup_location, dropoff_location, price, status} = req.body;
+    const { passengerid, driverid, pickup_location, dropoff_location, price } = req.body;
+    const status = "Pending";
+    
+    // กำหนด timezone และปรับรูปแบบวันที่/เวลา
     const now = new Date();
-    const date = now.toLocaleDateString('th-TH', {
-      timeZone: 'Asia/Bangkok',
-    });
-    const time = now.toLocaleTimeString('th-TH', {
-      timeZone: 'Asia/Bangkok',
-    });
-    const PickupTime = `${date} ${time}`;
+    const isoPickupTime = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
+    ).toISOString().slice(0, 19).replace("T", " ");
+
     const newRide = await pool.query(
-      "INSERT INTO ride (passengerid, driverid, pickup_location, dropoff_location, pickup_time, price, status) VALUES($1, $2, $3, $4, $5, $6 ,$7) RETURNING *",
-      [passengerid, driverid, pickup_location, dropoff_location,PickupTime, price, status]
+      `INSERT INTO ride 
+       (passengerid, driverid, pickup_location, dropoff_location, pickup_time, price, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) 
+       RETURNING *`,
+      [passengerid, driverid, pickup_location, dropoff_location, isoPickupTime, price, status]
     );
+
     res.json(newRide.rows);
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
