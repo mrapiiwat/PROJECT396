@@ -5,6 +5,7 @@ import RegisterDriver from "../Pages/RegisterDriver";
 import RegisterPassenger from "../Pages/RegisterPassenger";
 import Ride from "../Pages/Ride";
 import RideHistory from "../Pages/RideHistory";
+import ConfirmRide from "../Pages/ConfirmRide";
 
 
 
@@ -16,6 +17,8 @@ const RouteApp = () => {
         <Route path="/registerdriver" element={<RegisterDriver />} />
         <Route path="/registerpass" element={<RegisterPassenger />} />
         <Route path="/ride" element={<Ride/>} />
+        <Route path="/ConfirmRide" element={<ConfirmRide/>} />
+
       
 
         <Route path="/history" element={<RideHistory />} />
