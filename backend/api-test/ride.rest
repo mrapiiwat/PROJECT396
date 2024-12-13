@@ -1,0 +1,21 @@
+### TEST RIDE API
+GET http://localhost:5000/ride
+
+###
+POST http://localhost:5000/ride
+Content-Type: application/json
+
+{
+  "passengerid": 7,
+  "driverid": 69,
+  "pickup_location": "Tha-it",
+  "dropoff_location": "THE MALL",
+  "price": 300,
+  "status": "Pending"
+}
+
+###
+DELETE http://localhost:5000/ride/14
+
+###
+PUT http://localhost:5000/ride/14

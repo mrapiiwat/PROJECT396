@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../db");
+const pool = require("../Database/db");
 
 router.get("/", async (req, res) => {
   try {
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
       "INSERT INTO driver (fname, lname, phone_number , driving_license) VALUES($1, $2, $3 ,$4) RETURNING *",
       [fname, lname, phone_number, driving_license]
     );
-    res.json(newDriver.rows);
+    res.status(201).json({driverid : newDriver.rows[0].driverid});
   } catch (err) {
     console.error(err.message);
   }
