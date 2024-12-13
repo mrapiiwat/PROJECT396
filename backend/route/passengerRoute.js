@@ -14,6 +14,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:user", async (req, res) => {
+  try {
+    const { user } = req.params;
+    const passenger = await pool.query("SELECT * FROM passenger WHERE fname = $1", [user]);
+    res.json(passenger.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { fname, lname, phone_number } = req.body;

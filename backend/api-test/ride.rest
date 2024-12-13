@@ -10,8 +10,7 @@ Content-Type: application/json
   "driverid": 69,
   "pickup_location": "Tha-it",
   "dropoff_location": "THE MALL",
-  "price": 300,
-  "status": "Pending"
+  "price": 300
 }
 
 ###
