@@ -25,6 +25,12 @@ const HomePage = () => {
       >
         คนขับ
       </div>
+      <div
+        className="bg-white text-center p-6 m-4 w-48 rounded-lg shadow-lg hover:bg-primary hover:text-white cursor-pointer"
+        onClick={() => handleClick('เรียกรถ')}
+      >
+        เรียกรถ
+      </div>
     </div>
   );
 };
