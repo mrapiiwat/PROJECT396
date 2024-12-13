@@ -9,6 +9,11 @@ const HomePage = () => {
       navigate('/registerpass')
     }else if (role == 'คนขับ' ) {
       navigate('/registerdriver')}
+    else if (role == 'เรียกรถ' ) {
+      // navigate('/callcab')
+    }else if (role == 'ประวัติการเดินทาง' ) {
+      navigate('/history')
+    }
   };
 
   return (
@@ -30,6 +35,12 @@ const HomePage = () => {
         onClick={() => handleClick('เรียกรถ')}
       >
         เรียกรถ
+      </div>
+      <div
+        className="bg-white text-center p-6 m-4 w-48 rounded-lg shadow-lg hover:bg-primary hover:text-white cursor-pointer"
+        onClick={() => handleClick('ประวัติการเดินทาง')}
+      >
+        ดูประวัติการเดินทาง
       </div>
     </div>
   );
