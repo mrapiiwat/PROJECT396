@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ChooseUserType from "../Pages/ChooseUserType";
 import RegisterDriver from "../Pages/RegisterDriver";
 import RegisterPassenger from "../Pages/RegisterPassenger";
-import MapAndOptions from "../Pages/MapAndOptions";
-import RideOptions from "../Pages/RideOptions";
+import Ride from "../Pages/Ride";
 
 
 
@@ -15,8 +14,8 @@ const RouteApp = () => {
         <Route path="/" element={<ChooseUserType />} />
         <Route path="/registerdriver" element={<RegisterDriver />} />
         <Route path="/registerpass" element={<RegisterPassenger />} />
-        <Route path="/mapAndOptions" element={<MapAndOptions />} />
-        <Route path="/rideOptions" element={<RideOptions />} />
+        <Route path="/ride" element={<Ride/>} />
+      
 
       </Routes>
     </Router>

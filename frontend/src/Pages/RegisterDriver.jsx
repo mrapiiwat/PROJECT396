@@ -126,7 +126,7 @@ const DriverRegister = () => {
             <option value="">เลือกประเภท</option>
             <option value="Taxi">Taxi</option>
             <option value="Motorbike">Motorbike</option>
-            <option value="Ecar">Ecar</option>
+            <option value="Economy">Economy</option>
           </select>
         </div>
         <button
