@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     const now = new Date();
     const isoPickupTime = new Date(
       now.toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
-    ).toISOString().slice(0, 19).replace("T", " ");
+    );
 
     const newRide = await pool.query(
       `INSERT INTO ride 
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
       [passengerid, driverid, pickup_location, dropoff_location, isoPickupTime, price, status]
     );
 
-    res.json(newRide.rows);
+    res.json(newRide.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Internal Server Error" });
