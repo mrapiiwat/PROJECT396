@@ -1,12 +1,12 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ride from "../../public/ride.png";
 import axios from "axios";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Ride = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [userID , setUserID] = useState();
+  const [userID, setUserID] = useState();
   const [isUsernameConfirmed, setIsUsernameConfirmed] = useState(false);
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -21,9 +21,11 @@ const Ride = () => {
 
   const paymentMethods = ["เงินสด", "บัตรเครดิต", "พร้อมเพย์"];
 
-  const handleConfirmUsername = async() => {
+  const handleConfirmUsername = async () => {
     try {
-      const checkUser = await axios.get(`http://localhost:5000/passenger/${username}`);
+      const checkUser = await axios.get(
+        `http://localhost:5000/passenger/${username}`
+      );
       if (checkUser.data.length === 0) {
         alert("ไม่พบชื่อผู้ใช้ในระบบ");
         return;
@@ -35,7 +37,7 @@ const Ride = () => {
     }
   };
 
-  const handleConfirm = async() => {
+  const handleConfirm = async () => {
     try {
       if (!origin.trim()) {
         alert("กรุณากรอกสถานที่ต้นทาง!");
@@ -70,7 +72,24 @@ const Ride = () => {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
-      <div className="absolute top-2 left-2 z-10"><img onClick={()=>navigate('/history')} className="w-10 h-10 object-cover" src="https://w7.pngwing.com/pngs/923/257/png-transparent-burger-with-patty-tomato-and-lettuce-whopper-hamburger-chicken-sandwich-big-king-burger-king-premium-burgers-hamburger-menu-food-recipe-cheeseburger-thumbnail.png"/></div>
+      <div className="absolute top-2 left-2 z-10">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-14"
+          onClick={() => navigate("/history")}
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        
+      </div>
       {/* รูปภาพที่เกี่ยวกับการเดินทาง */}
       <div className="relative w-full h-45 bg-gray-200">
         <img
@@ -161,7 +180,9 @@ const Ride = () => {
         {/* ส่วนการเลือกวิธีการจ่ายเงิน */}
         {isUsernameConfirmed && (
           <div className="bg-white p-4 shadow-md rounded-lg">
-            <h2 className="text-lg font-bold mb-2 inline-block">เลือกวิธีการจ่ายเงิน</h2>
+            <h2 className="text-lg font-bold mb-2 inline-block">
+              เลือกวิธีการจ่ายเงิน
+            </h2>
             <div className="flex gap-4 flex-wrap">
               {paymentMethods.map((method) => (
                 <button
