@@ -7,7 +7,7 @@ const Ride = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [userID, setUserID] = useState();
-  const [isUsernameConfirmed, setIsUsernameConfirmed] = useState(false);มม
+  const [isUsernameConfirmed, setIsUsernameConfirmed] = useState(false);
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [selectedCarBrand, setSelectedCarBrand] = useState("");
