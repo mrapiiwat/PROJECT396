@@ -32,7 +32,7 @@ const PassengerRegister = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/passenger", formData);
-      navigate('/ride');
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
