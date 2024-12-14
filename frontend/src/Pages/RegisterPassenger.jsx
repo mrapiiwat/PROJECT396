@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PassengerRegister = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +32,7 @@ const PassengerRegister = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/passenger", formData);
+      navigate('/ride');
     } catch (err) {
       console.log(err);
     }
@@ -52,6 +55,7 @@ const PassengerRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">ชื่อ</label>
           <input
+            required
             type="text"
             name="fname"
             value={formData.fname}
@@ -62,6 +66,7 @@ const PassengerRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">นามสกุล</label>
           <input
+            required
             type="text"
             name="lname"
             value={formData.lname}
@@ -72,6 +77,7 @@ const PassengerRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">เบอร์โทร</label>
           <input
+            required
             type="text"
             name="phone_number"
             value={formData.phone_number}

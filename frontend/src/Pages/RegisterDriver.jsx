@@ -36,6 +36,7 @@ const DriverRegister = () => {
         license_plate: formData.license_plate,
         driverid: driverid,
       });
+      navigate("/");
       alert("สมัครสำเร็จ");
     } catch (error) {
       console.log(error);
@@ -52,6 +53,7 @@ const DriverRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">ชื่อ</label>
           <input
+            required
             type="text"
             name="lname"
             value={formData.lname}
@@ -62,6 +64,7 @@ const DriverRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">นามสกุล</label>
           <input
+            required
             type="text"
             name="fname"
             value={formData.fname}
@@ -72,6 +75,7 @@ const DriverRegister = () => {
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">เบอร์โทร</label>
           <input
+            required
             type="text"
             name="phone_number"
             value={formData.phone_number}
@@ -84,6 +88,7 @@ const DriverRegister = () => {
             หมายเลขใบขับขี่
           </label>
           <input
+            required
             type="text"
             name="driving_license"
             value={formData.driving_license}
@@ -96,6 +101,7 @@ const DriverRegister = () => {
             ป้ายทะเบียนรถ
           </label>
           <input
+            required
             type="text"
             name="license_plate"
             value={formData.license_plate}
@@ -108,6 +114,7 @@ const DriverRegister = () => {
             ยี่ห้อ/รุ่นรถ
           </label>
           <input
+            required
             type="text"
             name="model"
             value={formData.model}
