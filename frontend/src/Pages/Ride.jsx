@@ -111,6 +111,7 @@ const Ride = () => {
           <div className="flex items-center space-x-4">
             <input
               type="text"
+              required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="ใส่ชื่อผู้ใช้ของคุณ..."
