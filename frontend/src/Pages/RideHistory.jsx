@@ -17,7 +17,6 @@ const RideHistory = () => {
         setHistory([]);
       }
       setHistory(response.data);
-      setUser("");
     } catch (error) {
       console.error(error);
     }
