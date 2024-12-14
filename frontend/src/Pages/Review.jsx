@@ -10,6 +10,7 @@ const Review = () => {
   const location = useLocation();
   const [rideData, setRideData] = useState([]);
   const rideID = location.state;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +42,7 @@ const Review = () => {
   const ratingText = ["แย่มาก", "ไม่ดี", "ปานกลาง", "ดี", "ดีมาก"];
 
   const handleClose = () => {
-    alert("คุณกดปุ่มปิด!");
+    navigate("/");
   };
 
   const handleSubmit = async () => {
@@ -66,6 +67,7 @@ const Review = () => {
           ratingText[rating - 1]
         })\nTip: ${tip} ฿\nเหตุผล: ${selectedReason}\nความคิดเห็นเพิ่มเติม: ${comment}`
       );
+      navigate("/");
     } catch (error) {
       alert(error.massge);
     }
