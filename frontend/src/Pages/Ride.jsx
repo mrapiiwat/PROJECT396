@@ -23,6 +23,10 @@ const Ride = () => {
 
   const handleConfirmUsername = async () => {
     try {
+      if (!username.trim()) {
+        alert("กรุณากรอกชื่อผู้ใช้");
+        return;
+      }
       const checkUser = await axios.get(
         `http://localhost:5000/passenger/${username}`
       );
