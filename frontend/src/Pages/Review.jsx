@@ -160,7 +160,7 @@ const Review = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="mt-12 flex justify-center">
+      <div className="mt-24 flex justify-center">
         <button
           onClick={handleSubmit}
           className="w-[300px] mx-auto bg-green-500 text-white py-3 rounded-md font-bold text-lg"
