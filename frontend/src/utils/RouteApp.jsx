@@ -18,12 +18,8 @@ const RouteApp = () => {
         <Route path="/registerdriver" element={<RegisterDriver />} />
         <Route path="/registerpass" element={<RegisterPassenger />} />
         <Route path="/ride" element={<Ride/>} />
-        <Route path="/ConfirmRide" element={<ConfirmRide/>} />
-        <Route path="/Review" element={<Review/>} />
-
-
-      
-
+        <Route path="/confirmride" element={<ConfirmRide/>} />
+        <Route path="/review" element={<Review/>} />
         <Route path="/history" element={<RideHistory />} />
       </Routes>
     </Router>

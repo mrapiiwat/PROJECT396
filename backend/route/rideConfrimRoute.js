@@ -18,12 +18,8 @@ router.post("/", async (req, res) => {
   try {
     const { rideid, driverid, passengerid , confirmation_status } = req.body;
     const now = new Date();
-    const date = now.toLocaleDateString('th-TH', {
-      timeZone: 'Asia/Bangkok',
-    });
-    const time = now.toLocaleTimeString('th-TH', {
-      timeZone: 'Asia/Bangkok',
-    });
+    const date = now.toISOString().split('T')[0];
+    const time = now.toTimeString().split(' ')[0];
     const confirmation_time = `${date} ${time}`;
     const newRideConfirm = await pool.query(
       "INSERT INTO rideconfirmation (rideid, driverid, passengerid, confirmation_status , confirmation_time ) VALUES($1, $2, $3, $4 , $5) RETURNING *",

@@ -6,13 +6,12 @@ POST http://localhost:5000/rideconfirm
 Content-Type: application/json
 
 {
-  "rideid": 14,
-  "driverid": 7,
-  "passengerid": 6,
-  "driverid": 7,
+  "rideid": 28,
+  "driverid": 70,
+  "passengerid": 14,
   "confirmation_status": "Confirmed"
 }
 ###
 PUT http://localhost:5000/rideconfirm/3
 ###
-DELETE http://localhost:5000/rideconfirm/3
+DELETE http://localhost:5000/rideconfirm/9

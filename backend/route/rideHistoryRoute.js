@@ -16,10 +16,14 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { rideid, date_time, pickup_location, dropoff_location, distance, price , ride_status , ride_rating , review , tip , discount_use } = req.body;
+    const { rideid, pickup_location, dropoff_location, distance, price , ride_status , ride_rating , review , tip , discount_use } = req.body;
+    const now = new Date();
+    const date = now.toISOString().split('T')[0];
+    const time = now.toTimeString().split(' ')[0];
+    const confirmation_time = `${date} ${time}`;
     const newRideHistory = await pool.query(
       "INSERT INTO ridehistory (rideid, date_time, pickup_location, dropoff_location, distance, price , ride_status , ride_rating , review , tip , discount_use) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
-      [rideid, date_time, pickup_location, dropoff_location, distance, price , ride_status , ride_rating , review , tip , discount_use]
+      [rideid, confirmation_time, pickup_location, dropoff_location, distance, price , ride_status , ride_rating , review , tip , discount_use]
     );
     res.json(newRideHistory.rows);
   } catch (err) {

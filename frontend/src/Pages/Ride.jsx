@@ -55,15 +55,18 @@ const Ride = () => {
         alert("กรุณาเลือกวิธีการจ่ายเงินก่อนยืนยัน");
         return;
       }
-      alert(
-        `ชื่อผู้ใช้: ${username}\nต้นทาง: ${origin}\nปลายทาง: ${destination}\nคุณได้เลือกประเภทรถ: ${selectedCarBrand}\nวิธีจ่ายเงิน: ${paymentMethod}`
-      );
       const response = await axios.post("http://localhost:5000/ride", {
         passengerid: userID,
         driverid: null,
         pickup_location: origin,
         dropoff_location: destination,
         price: 0,
+      });
+      const { rideid } = response.data;
+      console.log(rideid);
+      
+      navigate("/confirmride", {
+        state: rideid,
       });
     } catch (error) {
       console.error(error);
@@ -88,10 +91,9 @@ const Ride = () => {
             d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        
       </div>
       {/* รูปภาพที่เกี่ยวกับการเดินทาง */}
-      <div className="relative w-full h-45 bg-gray-200">
+      <div className="relative w-full h-80 bg-gray-200">
         <img
           src={ride}
           alt="Travel"

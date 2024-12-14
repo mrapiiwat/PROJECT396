@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const  Review = () => {
+const Review = () => {
   const [rating, setRating] = useState(0);
   const [tip, setTip] = useState("");
   const [selectedReason, setSelectedReason] = useState("");
   const [comment, setComment] = useState("");
+  const location = useLocation();
+  const [rideData, setRideData] = useState([]);
+  const rideID = location.state;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/ride/${rideID}`
+        );
+        setRideData(response.data);
+        console.log(response.data);
+        
+      } catch (error) {
+        alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+      }
+    };
+    fetchData();
+  }, []);
 
   const reasons = [
     { id: 1, text: "คนขับมีน้ำใจ", icon: "🧳" },
@@ -17,29 +38,46 @@ const  Review = () => {
     { id: 8, text: "เส้นทางดี", icon: "📍" },
   ];
 
-  const ratingText = [
-    "แย่มาก",
-    "ไม่ดี",
-    "ปานกลาง",
-    "ดี",
-    "ดีมาก",
-  ];
+  const ratingText = ["แย่มาก", "ไม่ดี", "ปานกลาง", "ดี", "ดีมาก"];
 
   const handleClose = () => {
     alert("คุณกดปุ่มปิด!");
   };
 
-  const handleSubmit = () => {
-    alert(
-      `Rating: ${rating} ดาว (${ratingText[rating - 1]})\nTip: ${tip} ฿\nเหตุผล: ${selectedReason}\nความคิดเห็นเพิ่มเติม: ${comment}`
-    );
+  const handleSubmit = async () => {
+    try {
+      const saveHistory = await axios.post(
+        "http://localhost:5000/ridehistory",
+        {
+          rideid: rideID,
+          pickup_location: rideData.pickup_location,
+          dropoff_location: rideData.dropoff_location,
+          distance: 10,
+          price: rideData.price,
+          ride_status: "COMPLETED",
+          ride_rating: 5,
+          review: `${selectedReason} : ${comment} `,
+          tip: tip,
+          discount_use: null,
+        }
+      );
+      alert(
+        `Rating: ${rating} ดาว (${
+          ratingText[rating - 1]
+        })\nTip: ${tip} ฿\nเหตุผล: ${selectedReason}\nความคิดเห็นเพิ่มเติม: ${comment}`
+      );
+    } catch (error) {
+      alert(error.massge);
+    }
   };
 
   return (
     <div className="h-screen flex flex-col bg-gray-100 p-4">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <button onClick={handleClose} className="text-xl">✖️</button>
+        <button onClick={handleClose} className="text-xl">
+          ✖️
+        </button>
         <h1 className="text-3xl font-bold">
           {rating > 0 ? ratingText[rating - 1] : "ให้คะแนน"}
         </h1>
@@ -122,7 +160,7 @@ const  Review = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="mt-24 flex justify-center">
+      <div className="mt-12 flex justify-center">
         <button
           onClick={handleSubmit}
           className="w-[300px] mx-auto bg-green-500 text-white py-3 rounded-md font-bold text-lg"

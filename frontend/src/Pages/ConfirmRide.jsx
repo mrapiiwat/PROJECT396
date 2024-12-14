@@ -1,44 +1,89 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import photo1 from "../../public/photo1.jpg";
-import photo2 from "../../public/photo2.jpg";
 import cover from "../../public/cover.png";
+import axios from "axios";
 
 const ConfirmRide = () => {
+  const navigate = useNavigate();
   const [eta, setEta] = useState(0); // Estimated time of arrival
   const [driver, setDriver] = useState({});
+  const [drivers, setDrivers] = useState({});
+  const [cars, setCars] = useState({});
   const [car, setCar] = useState({});
   const [price, setPrice] = useState(0); // Random price
+  const [user, setUser] = useState({});
+  const [rideData , setRideData] = useState({});
+  const location = useLocation();
+  const rideID = location.state;
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/ride/${rideID}`)
+      .then((response) => {
+        setRideData(response.data);
+        const { passengerid } = response.data;
+        setUser(passengerid);
+      })
 
-  const drivers = [
-    { name: "สมชาย ใจดี", image: photo2 },
-    { name: "กบ แซ่ตั้ง", image: photo1 },
-    { name: "จิณณ์ ลาวัลย์", image: photo2 },
-  ];
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-  const cars = [
-    { model: "Toyota Soluna Vios", color: "Blue", plate: "กข 1234" },
-    { model: "Honda Civic", color: "White", plate: "ขจ 5678" },
-    { model: "Mazda 3", color: "Red", plate: "งย 9012" },
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/driver")
+      .then((response) => {
+        setDrivers(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/vehicle")
+      .then((response) => {
+        setCars(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Randomize price (50-200 baht)
+    setPrice(Math.floor(Math.random() * (200 - 50 + 1)) + 50);
+  }, []);
 
   useEffect(() => {
     // Randomize ETA (2-10 minutes)
     setEta(Math.floor(Math.random() * (10 - 2 + 1)) + 2);
 
-    // Randomize price (50-200 baht)
-    setPrice(Math.floor(Math.random() * (200 - 50 + 1)) + 50);
-
     // Randomize driver
-    const randomDriver = drivers[Math.floor(Math.random() * drivers.length)];
-    setDriver(randomDriver);
+    if (drivers.length > 0) {
+      const randomDriver = drivers[Math.floor(Math.random() * drivers.length)];
+      setDriver(randomDriver);
+    }
 
-    // Randomize car
-    const randomCar = cars[Math.floor(Math.random() * cars.length)];
-    setCar(randomCar);
-  }, []);
+    if (cars.length > 0) {
+      const randomCar = cars[Math.floor(Math.random() * cars.length)];
+      setCar(randomCar);
+    }
+  }, [drivers, cars]);
 
-  const handleArrived = () => {
-    alert("คุณถึงที่หมายแล้ว!");
+  const handleArrived = async () => {
+    try {
+      navigate("/review", { state: rideID });
+      await axios.put(`http://localhost:5000/ride/con/${driver.driverid}`, {
+        driverid: driver.driverid,
+        price: price,
+      });
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,7 +103,7 @@ const ConfirmRide = () => {
           <div className="mx-32">
             <p className="text-2xl font-bold mb-1">มาถึงใน {eta} นาที</p>
             <p className="text-gray-600 text-lg">
-              {car.model}, {car.color} | <strong>{car.plate}</strong>
+              {car.model} | <strong>{car.license_plate}</strong>
             </p>
           </div>
           <p className="text-2xl font-bold text-green-500 mx-32">{price} ฿</p>
@@ -68,12 +113,14 @@ const ConfirmRide = () => {
         <div className="flex items-center justify-between mt-4 mx-32">
           <div className="flex items-center space-x-4">
             <img
-              src={driver.image}
+              src={photo1}
               alt="Driver"
               className="w-20 h-20 rounded-full object-cover"
             />
             <div>
-              <p className="font-bold text-xl">{driver.name}</p>
+              <p className="font-bold text-xl">
+                {driver.fname} {driver.lname}
+              </p>
               <p className="text-sm text-gray-600">คนขับรถ</p>
             </div>
           </div>
@@ -86,13 +133,13 @@ const ConfirmRide = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   class="size-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                   />
                 </svg>

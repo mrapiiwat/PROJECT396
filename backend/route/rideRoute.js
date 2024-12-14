@@ -16,9 +16,10 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { passengerid, driverid, pickup_location, dropoff_location, price } = req.body;
+    const { passengerid, driverid, pickup_location, dropoff_location, price } =
+      req.body;
     const status = "Pending";
-    
+
     // กำหนด timezone และปรับรูปแบบวันที่/เวลา
     const now = new Date();
     const isoPickupTime = new Date(
@@ -30,7 +31,15 @@ router.post("/", async (req, res) => {
        (passengerid, driverid, pickup_location, dropoff_location, pickup_time, price, status) 
        VALUES ($1, $2, $3, $4, $5, $6, $7) 
        RETURNING *`,
-      [passengerid, driverid, pickup_location, dropoff_location, isoPickupTime, price, status]
+      [
+        passengerid,
+        driverid,
+        pickup_location,
+        dropoff_location,
+        isoPickupTime,
+        price,
+        status,
+      ]
     );
 
     res.json(newRide.rows[0]);
@@ -54,20 +63,51 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  try{
-    const checkStatus = await pool.query("SELECT status FROM ride WHERE rideid = $1", [id]);
+  try {
+    const checkStatus = await pool.query(
+      "SELECT status FROM ride WHERE rideid = $1",
+      [id]
+    );
     console.log(checkStatus.rows[0].status);
-    if(checkStatus.rows[0].status === "Pending"){
-      pool.query("UPDATE ride SET status = 'Confirmed' WHERE rideid = $1", [id]);
+    if (checkStatus.rows[0].status === "Pending") {
+      pool.query("UPDATE ride SET status = 'Confirmed' WHERE rideid = $1", [
+        id,
+      ]);
       return res.json("Ride was completed!");
-      
-    }else if(checkStatus.rows[0].status === "Confirmed"){
+    } else if (checkStatus.rows[0].status === "Confirmed") {
       pool.query("UPDATE ride SET status = 'Pending' WHERE rideid = $1", [id]);
       return res.json("Ride was Pending!");
     }
-  }catch(err){
+  } catch (err) {
     console.error(err.message);
-  };
+  }
+});
+
+router.put("/con/:id", async (req, res) => {
+  const { id } = req.params;
+  const { driverid, price } = req.body;
+  const now = new Date();
+  const dropoff_time = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
+  );
+  try {
+    pool.query(
+      "UPDATE ride SET driverid = $1, price = $2, dropoff_time = $3 WHERE rideid = $4",
+      [driverid, price, dropoff_time, id]
+    );
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ride = await pool.query("SELECT * FROM ride WHERE rideid = $1", [id]);
+    res.json(ride.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 module.exports = router;
