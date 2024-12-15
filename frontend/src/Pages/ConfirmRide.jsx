@@ -119,7 +119,7 @@ const ConfirmRide = () => {
             />
             <div>
               <p className="font-bold text-xl">
-                {driver.fname} {driver.lname}
+                {driver.lname} {driver.fname}
               </p>
               <p className="text-sm text-gray-600">คนขับรถ</p>
             </div>
